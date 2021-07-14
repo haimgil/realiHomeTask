@@ -3,7 +3,9 @@ PreRequisites:
 - Java 8
 Steps to run:
  >> Go to https://github.com/haimgil/realiHomeTask and clone project 
+ 
  >> mvn spring-boot:run
+ 
  >>Use Postman to run:
   I. POST localhost:8080/api/v0/upload
       Requires form-data body:
