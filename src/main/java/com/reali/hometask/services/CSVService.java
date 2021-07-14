@@ -1,6 +1,6 @@
 package com.reali.hometask.services;
 
-import com.reali.hometask.Listing;
+import com.reali.hometask.persistence.Listing;
 import com.reali.hometask.helper.CSVHelper;
 import com.reali.hometask.persistence.ListingRepository;
 import org.springframework.beans.factory.annotation.Autowired;

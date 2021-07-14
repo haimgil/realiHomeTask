@@ -1,4 +1,4 @@
-package com.reali.hometask;
+package com.reali.hometask.persistence;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 

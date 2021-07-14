@@ -1,7 +1,7 @@
 package com.reali.hometask.helper;
 
 
-import com.reali.hometask.Listing;
+import com.reali.hometask.persistence.Listing;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;

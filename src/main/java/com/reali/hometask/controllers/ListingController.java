@@ -1,9 +1,11 @@
 package com.reali.hometask.controllers;
 
-import com.reali.hometask.Listing;
+import com.reali.hometask.datainfo.GeoJsonInfo;
+import com.reali.hometask.persistence.Listing;
 import com.reali.hometask.helper.CSVHelper;
 import com.reali.hometask.persistence.ListingRepository;
 import com.reali.hometask.services.CSVService;
+import com.reali.hometask.services.GeoJsonGeneratorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -25,6 +28,8 @@ public class ListingController {
 
     @Autowired
     CSVService fileService;
+    @Autowired
+    private GeoJsonGeneratorService geoJsonGeneratorService;
 
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
@@ -46,10 +51,12 @@ public class ListingController {
     }
 
     @GetMapping("/listings")
-    public List<Listing> getAllListings(@RequestParam(required = false) long min_price, @RequestParam(required = false) long max_price, @RequestParam(required = false) long min_bed, @RequestParam(required = false) int max_bed, @RequestParam(required = false) long min_bath, @RequestParam(required = false) long max_bath){
+    public ResponseEntity<List<GeoJsonInfo>> getAllListings(@RequestParam(required = false) Long min_price, @RequestParam(required = false) Long max_price, @RequestParam(required = false) Long min_bed, @RequestParam(required = false) Integer max_bed, @RequestParam(required = false) Long min_bath, @RequestParam(required = false) Long max_bath){
 
-
-
-        return listingRepository.findAll();
+        List<GeoJsonInfo> geoJsons = new ArrayList<>();
+        for (Listing listing : listingRepository.findAll()) {
+            geoJsons.add(geoJsonGeneratorService.map(listing));
+        }
+        return ResponseEntity.ok(geoJsons);
     }
 }
