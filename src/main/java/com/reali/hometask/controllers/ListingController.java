@@ -51,12 +51,10 @@ public class ListingController {
     }
 
     @GetMapping("/listings")
-    public ResponseEntity<List<GeoJsonInfo>> getAllListings(@RequestParam(required = false) Long min_price, @RequestParam(required = false) Long max_price, @RequestParam(required = false) Long min_bed, @RequestParam(required = false) Integer max_bed, @RequestParam(required = false) Long min_bath, @RequestParam(required = false) Long max_bath){
+    public ResponseEntity<List<GeoJsonInfo>> getAllListings(@RequestParam(required = false) Long min_price, @RequestParam(required = false) Long max_price, @RequestParam(required = false) Long min_bed, @RequestParam(required = false) Integer max_bed, @RequestParam(required = false) Long min_bath, @RequestParam(required = false) Long max_bath) {
 
         List<GeoJsonInfo> geoJsons = new ArrayList<>();
-        for (Listing listing : listingRepository.findAll()) {
-            geoJsons.add(geoJsonGeneratorService.map(listing));
-        }
+        geoJsons.add(geoJsonGeneratorService.map(listingRepository.findAll()));
         return ResponseEntity.ok(geoJsons);
     }
 }

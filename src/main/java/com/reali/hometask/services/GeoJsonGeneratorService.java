@@ -6,21 +6,24 @@ import com.reali.hometask.persistence.Listing;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class GeoJsonGeneratorService {
 
     @Autowired
     private MapListingToFeature mapListingToFeature;
 
-    public GeoJsonInfo map(Listing listing){
+    public GeoJsonInfo map(List<Listing> listings){
 
         GeoJsonInfo geoJsonInfo = new GeoJsonInfo();
         geoJsonInfo.setType("FeatureCollection");
         geoJsonInfo.setFeatures(new ArrayList<>());
-        if (listing == null){
+        if (listings == null || listings.isEmpty()){
             return geoJsonInfo;
         }
-        geoJsonInfo.getFeatures().add(mapListingToFeature.map(listing));
+        for (Listing listing : listings) {
+            geoJsonInfo.getFeatures().add(mapListingToFeature.map(listing));
+        }
 
         return geoJsonInfo;
     }
