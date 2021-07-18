@@ -8,9 +8,12 @@ import org.apache.commons.csv.CSVRecord;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.io.Reader;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,6 +47,36 @@ public class CSVHelper {
         }catch (IOException e) {
             throw new RuntimeException("fail to parse CSV file: " + e.getMessage());
         }
+    }
+
+    public static List<Listing> readCsvData() {
+        List<Listing> listings = new ArrayList<>();
+        Reader fr = null;
+        try {
+            fr = new FileReader("src/main/resources/listing-details.csv");
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
+        Iterable<CSVRecord> records = null;
+        try {
+            records = CSVFormat.RFC4180.withFirstRecordAsHeader().parse(fr);
+        } catch (IOException e) {
+            throw new RuntimeException("fail to store csv data: " + e.getMessage());
+        }
+
+        for (CSVRecord record : records) {
+            Listing listing = new Listing(Long.parseLong(record.get("id")),
+                    record.get("street"),
+                    record.get("status"),
+                    Long.parseLong(record.get("price")),
+                    Integer.parseInt(record.get("bedrooms")),
+                    Integer.parseInt(record.get("bathrooms")),
+                    Integer.parseInt(record.get("sq_ft")),
+                    Double.parseDouble(record.get("lat")),
+                    Double.parseDouble(record.get("lng")));
+            listings.add(listing);
+        }
+        return listings;
     }
 
     public static boolean hasCSVFormat(MultipartFile file) {
