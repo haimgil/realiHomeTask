@@ -2,10 +2,12 @@ package com.reali.hometask.datainfo;
 
 import com.reali.hometask.helper.Pair;
 
+import java.util.List;
+
 public class GeometryInfo {
 
     private String type;
-    private Pair coordinates;
+    private List<Double> coordinates;
 
     public String getType() {
         return type;
@@ -15,11 +17,11 @@ public class GeometryInfo {
         this.type = type;
     }
 
-    public Pair getCoordinates() {
+    public List<Double> getCoordinates() {
         return coordinates;
     }
 
-    public void setCoordinates(Pair coordinates) {
+    public void setCoordinates(List<Double> coordinates) {
         this.coordinates = coordinates;
     }
 }

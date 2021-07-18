@@ -1,16 +1,20 @@
 package com.reali.hometask.mappers;
 
 import com.reali.hometask.datainfo.GeometryInfo;
-import com.reali.hometask.helper.Pair;
 import com.reali.hometask.persistence.Listing;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MapGeometry {
 
     public GeometryInfo map(Listing listing){
         GeometryInfo geometry = new GeometryInfo();
         geometry.setType("Point");
-        Pair pair = new Pair(listing.getLat(), listing.getLng());
-        geometry.setCoordinates(pair);
+        List<Double> coordinates = new ArrayList<>();
+        coordinates.add(listing.getLng());
+        coordinates.add(listing.getLat());
+        geometry.setCoordinates(coordinates);
 
         return geometry;
     }
